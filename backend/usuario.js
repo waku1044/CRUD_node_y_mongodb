@@ -10,7 +10,6 @@ const eschemaUsuario = new schema({
     telefono: String,
     idusuario: String
 })
-
 const ModeloUsuario = mongoose.model('usuario', eschemaUsuario);
 
 // crea la ruta para ahcer post en la base de datos
@@ -20,16 +19,15 @@ router.post('/agregarusuario', (req, res) => {
       email: req.body.email,
       telefono: req.body.telefono,
       idusuario: req.body.idusuario
-    });
-  
+    }); 
     nuevoUsuario.save()
-      .then(() => {
-        res.send('Usuario agregado correctamente');
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send('Error al agregar el usuario');
-      });
+      // .then(() => {
+      //   res.send('Usuario agregado correctamente');
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   res.status(500).send('Error al agregar el usuario');
+      // });
   });
 
 // Definir ruta GET para obtener lista de usuarios
@@ -43,8 +41,17 @@ router.get('/obtenerusuarios', (req, res) => {
         res.status(500).send('Error al obtener la lista de usuarios');
       });
   });
+// Obtenerusuario por id
+router.get(`/obtenerusuario/:id`,(req, res)=>{
+  const { id } = req.params;
+  ModeloUsuario.findById(id)
+  .then(response=>{
+    res.json(response)
+  })
+})
 
-//definir ruta put pra actualizar usuario
+
+//Definir ruta put pra actualizar usuario
   router.put('/actualizarusuario/:id', (req, res) => {
     const { id } = req.params;
     const { nombre, email, telefono } = req.body;
@@ -59,8 +66,18 @@ router.get('/obtenerusuarios', (req, res) => {
       });
   });
 
-
+  //Ruta para eliminar usuario
+  router.delete('/eliminarusuario/:id', (req, res) => {
+    const { id } = req.params;
   
+    ModeloUsuario.findByIdAndDelete(id)
+      .then((res) => {
+        res.send('Usuario eliminado correctamente');
+      })
+      .catch((error) => {
+        res.status(500).send('Error al eliminar el usuario');
+      });
+  });
 module.exports = router;
 
 

@@ -1,7 +1,7 @@
-import UsuarioIndividual from './UsuarioIndividual.jsx';
-import { useState, useEffect } from 'react'
-import axios from 'axios';
-  const ListaDeUsuarios = () => {
+import UsuarioIndividual from "./UsuarioIndividual.jsx";
+import { useState, useEffect } from "react";
+import axios from "axios";
+const ListaDeUsuarios = () => {
   const [datausers, setDatausers] = useState([]);
 
   // useEffect(() => {
@@ -15,20 +15,32 @@ import axios from 'axios';
   //     });
   // }, []);
   useEffect(() => {
-    axios.get('http://localhost:5000/api/usuario/obtenerusuarios')
-      .then(response => {
+    axios
+      .get("http://localhost:5000/api/usuario/obtenerusuarios")
+      .then((response) => {
         setDatausers(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching users:', error);
+      .catch((error) => {
+        console.error("Error fetching users:", error);
       });
-  }, []);
+  }, [datausers]);
 
   return (
-    <div>
+    <div className="container-fluid">
       <h1 className="text-center">Lista de Usuarios</h1>
-      {datausers.map(user => <UsuarioIndividual key={user.idusuario} name={user.nombre} mail={user.email} phone={user.telefono}/>)}
+      <div className="d-flex flex-wrap justify-content-center gap-3">
+        {datausers.map((user) => (
+          <UsuarioIndividual
+            key={user.idusuario}
+            name={user.nombre}
+            mail={user.email}
+            phone={user.telefono}
+            id={user._id}
+            idusuario={user.idusuario}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 export default ListaDeUsuarios;

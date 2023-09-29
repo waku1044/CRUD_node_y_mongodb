@@ -14,7 +14,7 @@ function App() {
         <Routes>
         <Route path='/' element={<ListaDeUsuarios/>} exact></Route>
         <Route path='/agregarusuario' element={<AgregarUsuario/>} exact></Route>
-        <Route path='/editarusuario:id' element={<EditarUsuario/>} exact></Route>
+        <Route path='/editarusuario/:id' element={<EditarUsuario/>} exact></Route>
         </Routes>
       </BrowserRouter>
     </>

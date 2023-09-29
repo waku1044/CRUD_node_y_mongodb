@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import iniquid from 'uniqid'; 
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const AgregarUsuario = () => {
+
+  const navegate = useNavigate();
 
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
@@ -28,12 +30,13 @@ const AgregarUsuario = () => {
     setNombre('')
     setEmail('')
     setTelefono('')
+    navegate('/')
     
 }
   return (
     <>
       <div className='w-75 mx-auto mt-4'>
-      <form className="bg-secondary py-5 mx-auto rounded d-flex flex-column align-items-center" action='POST' onSubmit={handleData}>
+      <form className="bg-secondary py-5 border border-3 mx-auto rounded d-flex flex-column align-items-center" action='POST' onSubmit={handleData}>
         <h2 className="mt-4 text-center">Crear nuevo Usuario</h2>
         <label htmlFor="nombre" className="form-label">
           Nombre
